@@ -38,7 +38,7 @@ Rico040氏の [Dislate Lite](https://github.com/Rico040/bunny-plugins/tree/maste
 
 1. ローカルのこのワークスペースで依存を入れる
 ```bash
-npm install
+npm ci
 npm run build
 ```
 
