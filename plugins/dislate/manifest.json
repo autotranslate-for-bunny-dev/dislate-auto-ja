@@ -1,0 +1,26 @@
+{
+    "name": "Dislate Auto-JA",
+    "description": "日本語以外のメッセージを自動翻訳します。手動翻訳も可能。",
+    "authors": [
+        {
+            "name": "Acquite",
+            "id": "581573474296791211"
+        },
+        {
+            "name": "sapphire",
+            "id": "757982547861962752"
+        },
+        {
+            "name": "Rico040",
+            "id": "619474349845643275"
+        },
+        {
+            "name": "chrysoljq",
+            "id": "791663810594603028"
+        }
+    ],
+    "main": "src/index.ts",
+    "vendetta": {
+        "icon": "ic_locale_24px"
+    }
+}
