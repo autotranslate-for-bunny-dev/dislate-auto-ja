@@ -6,11 +6,13 @@ import { manifest } from "@vendetta/plugin"
 import { useProxy } from "@vendetta/storage"
 
 import { settings } from ".."
+import { debugLogStore } from "../debugLogs"
+import DebugLogs from "./DebugLogs"
 import TargetLang from "./TargetLang"
 import TranslatorPage from "./TranslatorPage"
 
 const { ScrollView, Text } = ReactNative
-const { FormRow, FormSwitchRow, FormSection } = Forms
+const { FormRow, FormSwitchRow } = Forms
 
 const styles = stylesheet.createThemedStyleSheet({
     subheaderText: {
@@ -27,6 +29,7 @@ const styles = stylesheet.createThemedStyleSheet({
 export default () => {
     const navigation = NavigationNative.useNavigation()
     useProxy(settings)
+    useProxy(debugLogStore)
 
     return (
         <ScrollView>
@@ -68,6 +71,16 @@ export default () => {
                 onPress={() => navigation.push("VendettaCustomPage", {
                     title: "Translator",
                     render: TranslatorPage,
+                })}
+            />
+            <FormRow
+                label={"Debug Logs"}
+                subLabel={`${debugLogStore.entries.length} entries in current session`}
+                leading={<FormRow.Icon source={getAssetIDByName("ic_activity_24px")} />}
+                trailing={() => <FormRow.Arrow />}
+                onPress={() => navigation.push("VendettaCustomPage", {
+                    title: "Debug Logs",
+                    render: DebugLogs,
                 })}
             />
 

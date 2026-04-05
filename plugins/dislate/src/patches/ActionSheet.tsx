@@ -8,6 +8,7 @@ import { findInReactTree } from "@vendetta/utils"
 import { settings } from ".."
 
 import { DeepL, GTranslate } from "../api"
+import { pushLog } from "../debugLogs"
 import { showToast } from "@vendetta/ui/toasts"
 import { logger } from "@vendetta"
 import { protectSpecialSegments } from "../utils/protectedText"
@@ -63,6 +64,15 @@ export default () => before("openLazy", LazyActionSheet, ([component, key, msg])
                     if (!originalMessage) return
 
                     const protectedText = protectSpecialSegments(messageContent)
+                    const translatorName = settings.translator === 0 ? "DeepL" : "Google Translate"
+
+                    pushLog("info", isTranslated ? "manual.translate.start" : "manual.revert.start", isTranslated ? "Action sheet translation requested" : "Action sheet revert requested", {
+                        messageId,
+                        channelId: originalMessage.channel_id,
+                        translator: translatorName,
+                        targetLang: target_lang
+                    })
+
                     var translate
                     switch(settings.translator) {
                         case 0:
@@ -97,7 +107,19 @@ export default () => before("openLazy", LazyActionSheet, ([component, key, msg])
                     isTranslated
                         ? cachedData.unshift({ [messageId]: messageContent })
                         : cachedData = cachedData.filter((e: any) => e !== existingCachedObject, "cached data override")
+
+                    pushLog("info", isTranslated ? "manual.translate.success" : "manual.revert.success", isTranslated ? "Action sheet translation finished" : "Action sheet revert finished", {
+                        messageId,
+                        channelId: originalMessage.channel_id,
+                        targetLang: target_lang,
+                        translatedLength: translatedText.length
+                    })
                 } catch (e) {
+                    pushLog("error", "manual.translate.failure", "Action sheet translation failed", {
+                        messageId,
+                        channelId: originalMessage.channel_id,
+                        error: e instanceof Error ? e.message : String(e)
+                    })
                     showToast("Failed to translate message. Please check Debug Logs for more info.", getAssetIDByName("Small"))
                     logger.error(e)
                 }

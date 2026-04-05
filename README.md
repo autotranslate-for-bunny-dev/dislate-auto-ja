@@ -1,3 +1,5 @@
+English | [日本語](./README.ja.md)
+
 # Dislate Auto-JA
 
 `Dislate Auto-JA` is a Bunny plugin that automatically translates non-Japanese server messages into Japanese while keeping DM translation manual via long-press or `/translate`.
@@ -14,6 +16,7 @@ Add this URL in Bunny after GitHub Pages finishes deploying:
 - Skips 1:1 DMs and group DMs for privacy, while keeping long-press translate available
 - Preserves mentions, role mentions, slash command references, timestamps, URLs, code spans/blocks, and custom emoji
 - Keeps the original text visible when immersive translation is enabled
+- Includes an in-app Debug Logs page for troubleshooting auto translation
 
 ## Local development
 

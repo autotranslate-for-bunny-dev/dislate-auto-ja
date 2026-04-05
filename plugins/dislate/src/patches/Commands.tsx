@@ -10,6 +10,7 @@ import { settings } from ".."
 
 import { DeepLLangs} from "../lang"
 import { DeepL, GTranslate } from "../api"
+import { pushLog } from "../debugLogs"
 import { protectSpecialSegments } from "../utils/protectedText"
 
 const ClydeUtils = findByProps("sendBotMessage")
@@ -59,6 +60,15 @@ export default () => registerCommand({
         const [text, lang] = args
         try {
             const protectedText = protectSpecialSegments(text.value)
+            const translatorName = settings.translator === 0 ? "DeepL" : "Google Translate"
+
+            pushLog("info", "command.translate.start", "Slash command translation requested", {
+                channelId: ctx.channel.id,
+                targetLang: lang.value,
+                translator: translatorName,
+                textLength: text.value.length
+            })
+
             var content
             switch(settings.translator) {
                 case 0:
@@ -69,6 +79,12 @@ export default () => registerCommand({
                     break
             }
             const translatedText = protectedText.restore(content.text).trim()
+            pushLog("info", "command.translate.success", "Slash command translation finished", {
+                channelId: ctx.channel.id,
+                targetLang: lang.value,
+                translator: translatorName,
+                translatedLength: translatedText.length
+            })
             return await new Promise((resolve): void => showConfirmationAlert({
                 title: "Are you sure you want to send it?",
                 content: (
@@ -81,6 +97,10 @@ export default () => registerCommand({
                 cancelText: "Nope, don't send it"
             }))
         } catch (e) {
+            pushLog("error", "command.translate.failure", "Slash command translation failed", {
+                channelId: ctx.channel.id,
+                error: e instanceof Error ? e.message : String(e)
+            })
             logger.error(e)
             return ClydeUtils.sendBotMessage(ctx.channel.id, "Failed to translate message. Please check Debug Logs for more info.")
         }

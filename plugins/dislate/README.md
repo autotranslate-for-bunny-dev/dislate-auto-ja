@@ -14,6 +14,7 @@ Rico040氏の [Dislate Lite](https://github.com/Rico040/bunny-plugins/tree/maste
 - **構文保護**: メンション、ロール、スラッシュコマンド参照、タイムスタンプ、URL、コードブロック、カスタム絵文字は翻訳で壊れにくいように保護
 - **キャッシュ**: 翻訳済みメッセージをキャッシュして重複翻訳を防止（上限500件）
 - **Immersive表示**: 原文 + 🌐翻訳文 の両方を表示（設定で切替可）
+- **Debug Logs**: 設定画面から現在セッションのログを確認し、コピーやクリアができる
 
 ## オリジナルからの変更点
 
@@ -57,6 +58,7 @@ https://autotranslate-for-bunny-dev.github.io/dislate-auto-ja/dislate/
 | Immersive Translation | ON | 原文+翻訳の両方を表示 |
 | 翻訳先の言語 | ja（日本語） | 翻訳先の言語を選択 |
 | 翻訳エンジン | Google Translate | Google TranslateまたはDeepLを選択 |
+| Debug Logs | - | 現在セッションの翻訳ログを確認・コピー・クリア |
 
 ## セキュリティに関する注意
 
