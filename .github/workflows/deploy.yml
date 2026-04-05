@@ -34,9 +34,8 @@ jobs:
             - name: Copy additional files
               run: |
                   cp README.md dist/README.md
-                  printf -- "---\npermalink: /404.html\n---\n" > dist/404.md
-                  printf -- "> **Note:** You accessed a link that returned a 404. For Bunny, copy the plugin URL ending in \`/dislate/\` and add it as a plugin source.\n\n" >> dist/404.md
-                  cat README.md >> dist/404.md
+                  cp pages/index.html dist/index.html
+                  cp pages/404.html dist/404.html
 
             - name: Setup Pages
               uses: actions/configure-pages@v5
